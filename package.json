@@ -13,6 +13,7 @@
     "build": "npx tsc"
   },
   "dependencies": {
+    "aws-sdk": "^2.536.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
@@ -29,6 +30,7 @@
     "typescript": "^3.6.3"
   },
   "_moduleAliases": {
-    "@routes": "dist/routes"
+    "@routes": "dist/routes",
+    "@services": "dist/services"
   }
 }

@@ -9,7 +9,8 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"]
     }
   },
   "include": ["src"],
