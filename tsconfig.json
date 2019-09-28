@@ -9,8 +9,11 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@routes/*": ["routes/*"]
-    }
+      "@routes/*": ["routes/*"],
+      "@controllers/*": ["controllers/*"]
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]
