@@ -10,7 +10,8 @@
     "baseUrl": "./src",
     "paths": {
       "@routes/*": ["routes/*"],
-      "@controllers/*": ["controllers/*"]
+      "@controllers/*": ["controllers/*"],
+      "@models/*": ["models/*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true

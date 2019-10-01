@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -24,21 +24,6 @@ export class User extends BaseEntity {
   @Column()
   description!: string;
 
-  // @Column()
-  // profile_image!: string(url),
-
-  // @Column()
-  // following: Array<User>,
-
-  // follower: Array<User>,
-  // Bottom two should prolly be urls - David
-  // @Column()
-  // profile_website!: url;
-
   @Column()
   profile_location!: string;
-
-  // documents: Array<Document>,
-
-  // organizations: Array<Organizations>
 }

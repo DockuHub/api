@@ -33,6 +33,7 @@
   },
   "_moduleAliases": {
     "@routes": "src/routes",
-    "@controllers": "src/controllers"
+    "@controllers": "src/controllers",
+    "@models": "src/models"
   }
 }
