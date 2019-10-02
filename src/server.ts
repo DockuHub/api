@@ -1,15 +1,19 @@
 import 'module-alias/register';
 import 'reflect-metadata';
 
-import './db';
-
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import bodyParser from 'body-parser';
 
+/**
+ *
+ * Application providers
+ *
+ */
 import { api } from './routes';
+import { connect_db } from './db';
 
-const app: express.Application = express();
+export const app: express.Application = express();
 
 /**
  *
@@ -25,7 +29,7 @@ const { PORT, NODE_ENV } = process.env;
  */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json());
 app.disable('x-powered-by');
 
 /**
@@ -40,7 +44,11 @@ app.use('/api', api);
  * Server API
  *
  */
-app.listen(PORT, () => {
-  console.log(`> In ${NODE_ENV}`);
-  console.log(`> Listening on ${PORT}`);
-});
+if (NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`> In ${NODE_ENV}`);
+    console.log(`> Listening on ${PORT}`);
+
+    connect_db();
+  });
+}

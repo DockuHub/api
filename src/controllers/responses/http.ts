@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 enum HTTPStatusCode {
   success = 200,
+  created = 201,
   empty = 204,
   bad = 400,
   unauthorized = 401,
@@ -24,6 +25,19 @@ export class HTTP {
       data,
     };
     return res.status(HTTPStatusCode.success).send(payload);
+  }
+
+  /**
+   *
+   * Created request
+   *
+   */
+  public static created(res: Response, data: object): Response {
+    const payload: HTTPPayload = {
+      statusCode: HTTPStatusCode.success,
+      data,
+    };
+    return res.status(HTTPStatusCode.created).send(payload);
   }
 
   /**

@@ -11,6 +11,7 @@ export const api: Router = Router();
 import { UserController } from '@controllers/UserController';
 
 // TODO Create user middleware
-api.get('/user', UserController.read);
-api.post('/user', UserController.create);
-api.put('/user', UserController.update);
+api.get('/users', UserController.get);
+api.get('/users/:user_id', UserController.getById);
+api.post('/users/:user_id', UserController.create);
+api.put('/users/:user_id', UserController.update);

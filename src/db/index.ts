@@ -5,7 +5,7 @@ import { createConnection, Connection } from 'typeorm';
  * TypeORM connection
  *
  */
-async function connect_db(): Promise<Connection> {
+export async function connect_db(): Promise<Connection> {
   try {
     const conn: Connection = await createConnection();
     console.log('> Connected to DB');
@@ -15,5 +15,3 @@ async function connect_db(): Promise<Connection> {
     return e;
   }
 }
-
-connect_db();
