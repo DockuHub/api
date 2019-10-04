@@ -11,7 +11,8 @@
     "paths": {
       "@routes/*": ["routes/*"],
       "@controllers/*": ["controllers/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "@config/*": ["config/*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true

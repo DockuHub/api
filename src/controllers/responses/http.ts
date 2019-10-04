@@ -54,10 +54,10 @@ export class HTTP {
    * Bad request
    *
    */
-  public static bad(res: Response, data: object): Response {
+  public static bad(res: Response, error_message: string): Response {
     const payload: HTTPPayload = {
       statusCode: HTTPStatusCode.bad,
-      data,
+      data: { msg: error_message },
     };
     return res.status(HTTPStatusCode.bad).send(payload);
   }

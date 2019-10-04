@@ -5,11 +5,27 @@ import { User } from '@models/User';
 import { HTTP } from './responses/http';
 
 export class UserController {
-  public static create(req: Request, res: Response) {
-    const userRepo: Repository<User> = getRepository(User); // TyprORM uses Repositories
+  public static async create(req: Request, res: Response) {
+    try {
+      // TODO move to UserManager
+      // TODO Finish user model
+      // Below is to test if inserting into Pg works, it works
+      const userRepo: Repository<User> = getRepository(User);
 
-    // TODO return created HTTP response
-    return HTTP.empty(res);
+      const user = new User();
+      user.firstName = 'david';
+      user.lastName = 'castaneda';
+      user.email = 'dcast188@fiu.edu';
+      user.username = 'dcast188@fiu.edu';
+      user.description = 'Testing';
+      user.profile_location = 'Miami';
+      const new_user = await userRepo.save(user);
+
+      // TODO return created HTTP response
+      return HTTP.success(res, new_user);
+    } catch (e) {
+      return HTTP.bad(res, e.message);
+    }
   }
 
   public static get(req: Request, res: Response): Response {

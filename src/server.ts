@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 
 /**
  *
@@ -12,6 +13,7 @@ import bodyParser from 'body-parser';
  */
 import { api } from './routes';
 import { connect_db } from './db';
+import { logger as winston, stream } from '@config/winston';
 
 export const app: express.Application = express();
 
@@ -31,6 +33,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');
+
+if (NODE_ENV == 'production') {
+  app.use(morgan('combined', { stream }));
+} else {
+  app.use(morgan('dev'));
+}
 
 /**
  *
