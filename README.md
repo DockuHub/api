@@ -1,4 +1,6 @@
-# api
+# Docku core
+
+> Rethinking how you share your work with others
 
 ## Specifications
 
@@ -9,7 +11,7 @@
 
 ## Getting started
 
-- Clone, install deps(`yarn`)
+- Clone, install deps `yarn`
 - Create `.env` & set based on `.env.example`
 - run `yarn dev`
 
@@ -17,7 +19,7 @@
 
 Winston & Morgan are used to log throughout the api. Morgan used for HTTP request logs, Winston for api logs.
 
-- Levels: info | debug | error
+- **Levels**: info | debug | error
 
 ```typescript
 import { logger as winston } from '@config/winston';
