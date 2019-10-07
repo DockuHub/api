@@ -14,6 +14,8 @@
     "test": "NODE_ENV=test mocha -r ts-node/register src/**/*.test.ts"
   },
   "dependencies": {
+    "@types/swagger-jsdoc": "^3.0.2",
+    "@types/uuid": "^3.4.5",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -24,9 +26,8 @@
     "morgan": "^1.9.1",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
-    "swagger-express-ts": "^1.0.1",
-    "swagger-ui-dist": "^3.23.11",
     "typeorm": "^0.2.19",
+    "uuid": "^3.3.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -42,10 +43,8 @@
     "@types/winston": "^2.4.4",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "inversify": "^5.0.1",
     "mocha": "^6.2.1",
     "nodemon": "^1.19.2",
-    "swagger-jsdoc": "^3.4.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
   },

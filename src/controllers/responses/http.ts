@@ -10,7 +10,7 @@ enum HTTPStatusCode {
 
 type HTTPPayload = {
   statusCode: number;
-  data: Object;
+  data?: Object;
 };
 
 export class HTTP {
@@ -19,11 +19,9 @@ export class HTTP {
    * Successful request
    *
    */
-  public static success(res: Response, data: object): Response {
-    const payload: HTTPPayload = {
-      statusCode: HTTPStatusCode.success,
-      data,
-    };
+  public static success(res: Response, data?: object): Response {
+    const payload: HTTPPayload = { statusCode: HTTPStatusCode.success };
+    data && (payload.data = data);
     return res.status(HTTPStatusCode.success).send(payload);
   }
 
@@ -32,11 +30,9 @@ export class HTTP {
    * Created request
    *
    */
-  public static created(res: Response, data: object): Response {
-    const payload: HTTPPayload = {
-      statusCode: HTTPStatusCode.success,
-      data,
-    };
+  public static created(res: Response, data?: object): Response {
+    const payload: HTTPPayload = { statusCode: HTTPStatusCode.success };
+    data && (payload.data = data);
     return res.status(HTTPStatusCode.created).send(payload);
   }
 
