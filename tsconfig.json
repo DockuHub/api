@@ -12,7 +12,8 @@
       "@routes/*": ["routes/*"],
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@managers/*": ["managers/*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true

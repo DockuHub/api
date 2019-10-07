@@ -14,6 +14,7 @@ import morgan from 'morgan';
 import { api } from './routes';
 import { connect_db } from './db';
 import { logger as winston, stream } from '@config/winston';
+import { UserController } from '@controllers/UserController';
 
 export const app: express.Application = express();
 
@@ -39,6 +40,28 @@ if (NODE_ENV == 'production') {
 } else {
   app.use(morgan('dev'));
 }
+
+/**
+ *
+ * API DOCS
+ *
+ */
+const swaggerDefinition = {
+  info: {
+    // API informations (required)
+    title: 'Hello World', // Title (required)
+    version: '1.0.0', // Version (required)
+    description: 'A sample API', // Description (optional)
+  },
+  host: `localhost:${PORT}`, // Host (optional)
+  basePath: '/', // Base path (optional)
+};
+
+// Options for the swagger docs
+const options = {
+  swaggerDefinition,
+  apis: ['./src/routes/*.js', './swagger.yaml'],
+};
 
 /**
  *
