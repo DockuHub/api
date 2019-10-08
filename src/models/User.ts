@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Generated } from 'typeorm';
 
 import { BaseModel } from '@models/BaseModel';
+
 @Entity()
 export class User extends BaseModel {
   // TODO Add missing columns (documents: Array<Document>, organizations: Array<Organization>, following: Array<User>, followers: Array<User>)

@@ -5,8 +5,8 @@ import { UserType } from '@managers/User/types';
 
 export class UserManager {
   /**
+   *
    * Create a user
-   * @param user
    *
    */
   static async create(user: UserType): Promise<User> {
@@ -17,8 +17,8 @@ export class UserManager {
   }
 
   /**
+   *
    * Find user by username
-   * @param username
    *
    */
   public static async findByUsername(
