@@ -28,17 +28,17 @@ describe('User', () => {
 
   /**
    *
-   * Get single user with id=1
+   * Send bad request for username
    *
    */
-  describe('GET /users/:id', () => {
-    it('Should get a single user', done => {
+  describe('GET /users/:username', () => {
+    it('Should get 400 for invalid request', done => {
       chai
         .request(app)
-        .get('/api/users/1')
+        .get('/api/users/test-invalid-user')
         .set('Content-Type', 'application/json')
         .end((err: Error, res) => {
-          res.should.have.status(200);
+          res.should.have.status(400);
           res.body.data.should.be.a('object');
           done();
         });

@@ -14,6 +14,7 @@ import morgan from 'morgan';
 import { api } from './routes';
 import { connect_db } from './db';
 import { stream } from '@config/winston';
+import { MailManager } from '@managers/mail/MailManager';
 
 export const app: express.Application = express();
 
@@ -52,8 +53,9 @@ app.use('/api', api);
  * Server API
  *
  */
+
 if (NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     console.log(`> In ${NODE_ENV}`);
     console.log(`> Listening on ${PORT}`);
 
