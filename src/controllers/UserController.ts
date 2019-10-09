@@ -1,11 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-import {
-  check,
-  Result,
-  validationResult,
-  ValidationError,
-  ValidationChain,
-} from 'express-validator';
+import { Request, Response } from 'express';
 
 import { HTTP } from './responses/http';
 
@@ -19,13 +12,6 @@ export class UserController {
    * @param res
    */
   public static async create(req: Request, res: Response): Promise<Response> {
-    const request_errors: Result<ValidationError> = validationResult(req);
-
-    if (!request_errors.isEmpty()) {
-      const msg: string = request_errors.array()[0].msg;
-      return HTTP.bad(res, msg);
-    }
-
     const user: UserType = { ...req.body };
 
     try {
@@ -44,6 +30,7 @@ export class UserController {
   public static get(req: Request, res: Response): Response {
     // TODO handle pagination
     // TODO handle scopes for this endpoints(admin route?)
+    // TODO Define if we should remove this route for now
     const users = [{ name: 'david' }]; // For passing tests
     return HTTP.success(res, users);
   }
@@ -76,28 +63,4 @@ export class UserController {
   public static update(req: Request, res: Response): Response {
     return HTTP.empty(res);
   }
-
-  /**
-   *
-   * Validate API requests
-   *
-   */
-  // TODO Verify if we want to keep validations per controller or in its own domain (validate)
-  public static validate_create_user: Array<ValidationChain> = [
-    check('firstName', 'firstName not found')
-      .exists()
-      .trim()
-      .escape(),
-    check('lastName', 'lastName not found')
-      .exists()
-      .trim()
-      .escape(),
-    check('username', 'Username not found')
-      .exists()
-      .trim()
-      .escape(),
-    check('email', 'Invalid email')
-      .isEmail()
-      .normalizeEmail(),
-  ];
 }
