@@ -10,7 +10,6 @@ export const api: Router = Router();
  */
 
 // TODO Create user middleware
-api.get('/users', UserController.get);
 api.get('/users/:username', UserController.getByUsername);
 api.post('/users', UserController.create);
 api.patch('/users/:user_id', UserController.update);

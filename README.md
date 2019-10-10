@@ -34,14 +34,17 @@ The idea is to have a mailing service which is agnostic of any driver we desire 
 
 ```Typescript
 // Create the request
-const mailingList: Array<Mail> = [{
+const mailingList: Array<MailMessage> = [{
                 to: "email@docku.com",
                 template: 'welcome.html',
                 subject: 'Welcome to Docku',
                 context: {}
               }]
-const response: Promise<Array<MailMessage | string>> = await mailer.send(mailingList);
+
+const response: Promise<Array<MailMessage | MessageId>> = await mailer.send(mailingList);
 ```
+
+Mailing templates are created using **mjml** which is a library to create responsive emails. MJML compiles mjml templates into response html code which makes it much easier to create consistent email templates without the need for tables, mailchimp compiler or any html non-sense. MJML also injects data into the email body.
 
 #### TODO
 

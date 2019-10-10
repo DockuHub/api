@@ -6,8 +6,6 @@ import { UserManager } from '@managers/User/UserManager';
 import { UserType } from '@managers/User/types';
 import { Mail } from '@services/mail/Mail';
 
-const mailer = new Mail();
-
 export class UserController {
   /**
    * Create a user
@@ -15,6 +13,7 @@ export class UserController {
    * @param res
    */
   public static async create(req: Request, res: Response): Promise<Response> {
+    // TODO Welcome email template with magic link included to signin?
     const user: UserType = { ...req.body };
 
     try {
@@ -24,19 +23,6 @@ export class UserController {
     } catch (e) {
       return HTTP.bad(res, e.message);
     }
-  }
-
-  /**
-   * Get a list of users
-   * @param req
-   * @param res
-   */
-  public static get(req: Request, res: Response): Response {
-    // TODO handle pagination
-    // TODO handle scopes for this endpoints(admin route?)
-    // TODO Define if we should remove this route for now
-    const users = [{ name: 'david' }]; // For passing tests
-    return HTTP.success(res, users);
   }
 
   /**
