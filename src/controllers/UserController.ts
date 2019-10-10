@@ -4,6 +4,9 @@ import { HTTP } from './responses/http';
 
 import { UserManager } from '@managers/User/UserManager';
 import { UserType } from '@managers/User/types';
+import { Mail } from '@services/mail/Mail';
+
+const mailer = new Mail();
 
 export class UserController {
   /**
@@ -16,6 +19,7 @@ export class UserController {
 
     try {
       await UserManager.create(user);
+
       return HTTP.created(res);
     } catch (e) {
       return HTTP.bad(res, e.message);

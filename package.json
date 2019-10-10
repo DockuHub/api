@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@types/express-validator": "^3.0.0",
+    "@types/mailgun-js": "^0.22.3",
     "@types/swagger-jsdoc": "^3.0.2",
     "@types/uuid": "^3.4.5",
     "app-root-path": "^2.2.1",
@@ -23,6 +24,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "mailgun-js": "^0.22.0",
     "module-alias": "^2.2.1",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
@@ -55,6 +57,7 @@
     "@controllers": "src/controllers",
     "@models": "src/models",
     "@config": "src/config",
-    "@managers": "src/managers"
+    "@managers": "src/managers",
+    "@services": "src/services"
   }
 }

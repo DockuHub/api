@@ -1,7 +1,7 @@
 import AWS, { SES } from 'aws-sdk';
 import { PromiseResult } from 'aws-sdk/lib/request';
 
-import { Mail } from '@managers/mail/types';
+import { MailDriver, MailMessage } from '@services/mail/types';
 
 /**
  * ENV variables
@@ -18,8 +18,8 @@ const {
  */
 AWS.config.update({
   region: 'us-east-1',
-  accessKeyId: AWS_ACCESS_KEY_ID,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  accessKeyId: AWS_ACCESS_KEY_ID!,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY!,
 });
 
 /**
@@ -27,13 +27,15 @@ AWS.config.update({
  */
 const ses = new SES();
 
-export class MailManager {
+export class AWSSimpleEmailService implements MailDriver {
   /**
    * Send Email via AWS SimpleEmailService(SES)
    */
-  public static async send(mailingList: Array<Mail>) {
-    const response: Promise<Array<Mail | SES.MessageId>> = Promise.all(
-      mailingList.map(async (mail: Mail) => {
+  public async send(
+    mailingList: Array<MailMessage>,
+  ): Promise<Array<MailMessage | SES.MessageId>> {
+    const response: Promise<Array<MailMessage | SES.MessageId>> = Promise.all(
+      mailingList.map(async (mail: MailMessage) => {
         // TODO Create HTML template and inject
 
         /**
@@ -67,7 +69,7 @@ export class MailManager {
         // Maybe simple counter with a set of users who have issues receiving the email and then retry until counter is over?
         return response
           .then((data: SES.SendEmailResponse): SES.MessageId => data.MessageId)
-          .catch((err: AWS.AWSError): Mail => mail);
+          .catch((err: AWS.AWSError): MailMessage => mail);
       }),
     );
 

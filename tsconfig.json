@@ -13,7 +13,8 @@
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
       "@config/*": ["config/*"],
-      "@managers/*": ["managers/*"]
+      "@managers/*": ["managers/*"],
+      "@services/*": ["services/*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
