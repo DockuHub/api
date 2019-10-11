@@ -11,19 +11,16 @@ export class User extends BaseModel {
   @Column({
     type: 'varchar',
     length: 15,
-    nullable: false,
   })
   firstName!: string;
 
   @Column({
     type: 'varchar',
     length: 20,
-    nullable: false,
   })
   lastName!: string;
 
   @Column({
-    unique: true,
     nullable: false,
     type: 'varchar',
     length: 15,

@@ -4,7 +4,9 @@ import { HTTP } from './responses/http';
 
 import { UserManager } from '@managers/User/UserManager';
 import { UserType } from '@managers/User/types';
-import { Mail } from '@services/mail/Mail';
+
+import { Mail } from '../server';
+import { MailMessage } from '@services/mail/types';
 
 export class UserController {
   /**
@@ -18,7 +20,17 @@ export class UserController {
 
     try {
       await UserManager.create(user);
+      const mailMessage: Array<MailMessage> = [
+        {
+          to: user.email,
+          template: '',
+          subject: 'Welcome to Docku',
+          context: {},
+        },
+      ];
 
+      const response = await Mail.send(mailMessage);
+      console.log({ response });
       return HTTP.created(res);
     } catch (e) {
       return HTTP.bad(res, e.message);

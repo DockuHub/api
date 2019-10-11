@@ -15,6 +15,12 @@ import { api } from './routes';
 import { connect_db } from './db';
 import { stream } from '@config/winston';
 
+/**
+ * Service Providers
+ */
+import { Mail as MailServiceProvider } from '@services/mail/Mail';
+import { Cache as CacheServiceProvider } from '@services/cache/cache';
+
 export const app: express.Application = express();
 
 /**
@@ -23,6 +29,14 @@ export const app: express.Application = express();
  *
  */
 const { PORT, NODE_ENV } = process.env;
+
+/**
+ *
+ * Service Providers
+ *
+ */
+export const Mail = new MailServiceProvider();
+export const Cache = new CacheServiceProvider();
 
 /**
  *

@@ -1,6 +1,5 @@
-import { AWSSimpleEmailService as SES } from '@services/aws/ses';
 import { MailDriver, MailMessage } from '@services/mail/types';
-import { Mailgun } from '@services/mailgun/mailgun';
+import { Mailgun, AWSSimpleEmailService } from '@services/mail/drivers';
 
 const { NODE_ENV } = process.env;
 
@@ -11,7 +10,8 @@ export class Mail implements MailDriver {
     /**
      * Initialize instance of mailer based on enviornment
      */
-    this.mailer = NODE_ENV === 'production' ? new SES() : new Mailgun();
+    this.mailer =
+      NODE_ENV === 'production' ? new AWSSimpleEmailService() : new Mailgun();
   }
 
   public async send(

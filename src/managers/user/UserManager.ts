@@ -9,6 +9,7 @@ export class UserManager {
    * Create a user
    *
    */
+
   static async create(user: UserType): Promise<User> {
     const repo: Repository<User> = getRepository(User);
     const new_user = new User();
