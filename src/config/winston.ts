@@ -18,6 +18,7 @@ const options = {
     maxsize: 5242880, // 5MB
     maxFiles: 5,
     colorize: true,
+    eol: '\r\n',
   },
 };
 
