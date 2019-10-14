@@ -1,10 +1,11 @@
 export interface MailDriver {
-  send(mailingList: Array<MailMessage>): Promise<Array<MailMessage | string>>;
+  send(mailingList: MailMessage): Promise<string | Error>;
 }
 
 export type MailMessage = {
   to: string;
-  template: string;
   subject: string;
-  context: Object;
+  context: object;
+  template: string;
+  html?: string;
 };

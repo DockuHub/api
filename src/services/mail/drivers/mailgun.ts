@@ -20,38 +20,40 @@ const gun: mg.Mailgun = new mg({
 });
 
 export class Mailgun implements MailDriver {
-  public async send(
-    mailingList: Array<MailMessage>,
-  ): Promise<Array<MailMessage | string>> {
-    const response: Promise<Array<MailMessage | string>> = Promise.all(
-      mailingList.map((mail: MailMessage) => {
-        /**
-         * Configure data
-         */
-        const payload: mg.messages.SendData = {
-          from: `Docku <${DOCKU_NO_REPLY_EMAIL_DOMAIN}>`,
-          to: mail.to,
-          subject: mail.subject,
-          html: '<b>Test yuh</b>',
-        };
+  public async send(mail: MailMessage): Promise<string | Error> {
+    // If no html template, return
+    // TODO Check if this if is fine here
+    if (!mail.html) {
+      const error: string = `AWS SES Error - Could not send email to ${mail.to} - No HTML template found`;
+      throw new Error(error);
+    }
 
-        /**
-         * Send email
-         */
-        const response: Promise<mg.messages.SendResponse> = gun
-          .messages()
-          .send(payload);
+    /**
+     * Configure data
+     */
+    const payload: mg.messages.SendData = {
+      from: `Docku <${DOCKU_NO_REPLY_EMAIL_DOMAIN}>`,
+      to: mail.to,
+      subject: mail.subject,
+      html: mail.html,
+    };
 
-        /**
-         * Return either the confirmation id or the recepient whomst
-         * was unable to receive the email for logging and/or retries.
-         */
-        return response
-          .then((data: mg.messages.SendResponse) => data.id)
-          .catch((err: mg.Error) => mail);
-      }),
-    );
+    /**
+     * Send email
+     */
+    const response: Promise<mg.messages.SendResponse> = gun
+      .messages()
+      .send(payload);
 
-    return response;
+    /**
+     * Return either the confirmation id or the recepient whomst
+     * was unable to receive the email for logging and/or retries.
+     */
+    return response
+      .then((data: mg.messages.SendResponse) => data.id)
+      .catch((err: mg.Error) => {
+        const error: string = `Mailgun Error - Could not send email to ${mail.to} - ${err.message}`;
+        throw new Error(error);
+      });
   }
 }

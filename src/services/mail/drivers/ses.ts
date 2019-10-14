@@ -31,48 +31,48 @@ export class AWSSimpleEmailService implements MailDriver {
   /**
    * Send Email via AWS SimpleEmailService(SES)
    */
-  public async send(
-    mailingList: Array<MailMessage>,
-  ): Promise<Array<MailMessage | SES.MessageId>> {
-    const response: Promise<Array<MailMessage | SES.MessageId>> = Promise.all(
-      mailingList.map(async (mail: MailMessage) => {
-        // TODO Create HTML template and inject
+  public async send(mail: MailMessage): Promise<string | SES.MessageId> {
+    // TODO Create HTML template and inject
 
-        /**
-         * Configure data
-         */
-        const payload: SES.SendEmailRequest = {
-          Source: DOCKU_EMAIL_DOMAIN || 'no-reply@docku.com',
-          ReplyToAddresses: [
-            DOCKU_NO_REPLY_EMAIL_DOMAIN || 'no-reply@docku.com',
-          ],
-          Destination: { ToAddresses: [mail.to] },
-          Message: {
-            Subject: { Data: mail.subject, Charset: 'UTF-8' },
-            Body: { Html: { Data: 'Test', Charset: 'UTF-8' } },
-          },
-          ConfigurationSetName: 'ConfigSet',
-        };
+    // If no html template, return
+    // TODO Check if this if is fine here
+    if (!mail.html) {
+      const error: string = `AWS SES Error - Could not send email to ${mail.to} - No HTML template found`;
+      throw new Error(error);
+    }
 
-        /**
-         * Send email and promisify the request
-         */
-        const response: Promise<
-          PromiseResult<SES.SendEmailResponse, AWS.AWSError>
-        > = ses.sendEmail(payload).promise();
+    /**
+     * Configure data
+     */
+    const payload: SES.SendEmailRequest = {
+      Source: DOCKU_EMAIL_DOMAIN || 'no-reply@docku.com',
+      ReplyToAddresses: [DOCKU_NO_REPLY_EMAIL_DOMAIN || 'no-reply@docku.com'],
+      Destination: { ToAddresses: [mail.to] },
+      Message: {
+        Subject: { Data: mail.subject, Charset: 'UTF-8' },
+        Body: { Html: { Data: mail.html, Charset: 'UTF-8' } },
+      },
+      ConfigurationSetName: 'ConfigSet',
+    };
 
-        /**
-         * Return either the confirmation id or the recepient whomst
-         * was unable to receive the email for logging and/or retries.
-         */
-        // TODO Implement retry feature
-        // Maybe simple counter with a set of users who have issues receiving the email and then retry until counter is over?
-        return response
-          .then((data: SES.SendEmailResponse): SES.MessageId => data.MessageId)
-          .catch((err: AWS.AWSError): MailMessage => mail);
-      }),
-    );
+    /**
+     * Send email and promisify the request
+     */
+    const response: Promise<
+      PromiseResult<SES.SendEmailResponse, AWS.AWSError>
+    > = ses.sendEmail(payload).promise();
 
-    return response;
+    /**
+     * Return either the confirmation id or the recepient whomst
+     * was unable to receive the email for logging and/or retries.
+     */
+    // TODO Implement retry feature
+    // Maybe simple counter with a set of users who have issues receiving the email and then retry until counter is over?
+    return response
+      .then((data: SES.SendEmailResponse): SES.MessageId => data.MessageId)
+      .catch((err: AWS.AWSError) => {
+        const error: string = `AWS SES Error - Could not send email to ${mail.to} - ${err.message}`;
+        throw new Error(error);
+      });
   }
 }

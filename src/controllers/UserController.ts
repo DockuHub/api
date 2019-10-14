@@ -8,6 +8,8 @@ import { UserType } from '@managers/User/types';
 import { Mail } from '../server';
 import { MailMessage } from '@services/mail/types';
 
+import { logger as winston } from '@config/winston';
+
 export class UserController {
   /**
    * Create a user
@@ -20,19 +22,28 @@ export class UserController {
 
     try {
       await UserManager.create(user);
+
+      // Send email
       const mailMessage: Array<MailMessage> = [
         {
           to: user.email,
-          template: '',
           subject: 'Welcome to Docku',
-          context: {},
+          template: 'create_user.html',
+          context: { magiclink: 'https://google.com' },
         },
       ];
 
+      // TODO Add return type to this response
+      // Check if response length is > 0. That tells us a messageId was created
       const response = await Mail.send(mailMessage);
-      console.log({ response });
+      winston.info({
+        message: `Account created for: ${user.email}`,
+        emailId: response,
+      });
+
       return HTTP.created(res);
     } catch (e) {
+      winston.info(e.message);
       return HTTP.bad(res, e.message);
     }
   }
