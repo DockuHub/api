@@ -1,6 +1,6 @@
-import appRoot from 'app-root-path';
-import winston from 'winston';
-import moment from 'moment';
+import appRoot from "app-root-path";
+import winston from "winston";
+import moment from "moment";
 
 const { NODE_ENV } = process.env;
 
@@ -11,15 +11,15 @@ const { NODE_ENV } = process.env;
  */
 const options = {
   file: {
-    level: 'info',
+    level: "info",
     filename: `${appRoot}/src/logs/api.log`,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
     maxFiles: 5,
     colorize: true,
-    eol: '\r\n',
-  },
+    eol: "\r\n"
+  }
 };
 
 /**
@@ -29,7 +29,7 @@ const options = {
  */
 export const logger: winston.Logger = winston.createLogger({
   transports: [new winston.transports.File(options.file)],
-  exitOnError: false,
+  exitOnError: false
 });
 
 /**
@@ -37,11 +37,11 @@ export const logger: winston.Logger = winston.createLogger({
  * Set console log as simple format on dev
  *
  */
-if (NODE_ENV !== 'production') {
+if (NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
+      format: winston.format.simple()
+    })
   );
 }
 
@@ -53,5 +53,5 @@ if (NODE_ENV !== 'production') {
 export const stream = {
   write: (message: string): void => {
     logger.info(message);
-  },
+  }
 };

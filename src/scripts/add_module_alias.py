@@ -20,6 +20,7 @@ def update_package_json(alias):
         
         with open(file_path, "w") as f:
           json.dump(pkg, f, ensure_ascii=False, indent=2)
+          print("✅ package.json")
 
   except ValueError as e:
     print("ValueError - ", e)
@@ -43,6 +44,7 @@ def update_ts_config(alias):
         
         with open(file_path, "w") as f:
           json.dump(config, f, ensure_ascii=False, indent=2)
+          print("✅ tsconfig.json")
 
   except ValueError as e:
     print("ValueError - ", e)
@@ -51,5 +53,8 @@ def update_ts_config(alias):
 if __name__ == "__main__":
   # TODO Get user params
   alias = "ye"
+  path = "src/ye"
   update_package_json(alias)
   update_ts_config(alias)
+
+  

@@ -1,23 +1,23 @@
-import { promises as fs } from 'fs';
-import appRoot from 'app-root-path';
+import { promises as fs } from "fs";
+import appRoot from "app-root-path";
 
-import { Cache } from '../../../server';
+import { Cache } from "../../../server";
 
 export async function inject_template(
   template_name: string,
-  args: object | any,
+  args: object | any
 ): Promise<string> {
   try {
     // TODO Cache template
     const template_path: string = `${appRoot}/src/services/mail/templates/${template_name}.html`;
     const template: string = await fs.readFile(template_path, {
-      encoding: 'utf8',
-      flag: 'r',
+      encoding: "utf8",
+      flag: "r"
     });
 
     let injected_template: string = template;
     Object.keys(args).forEach((key: string) => {
-      const regex: RegExp = new RegExp(`{${key}}`, 'g');
+      const regex: RegExp = new RegExp(`{${key}}`, "g");
       injected_template = template.replace(regex, args[key]);
     });
 

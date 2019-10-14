@@ -1,8 +1,8 @@
-import { MailDriver, MailMessage } from '@services/mail/types';
-import { Mailgun, AWSSimpleEmailService } from '@services/mail/drivers';
+import { MailDriver, MailMessage } from "@services/mail/types";
+import { Mailgun, AWSSimpleEmailService } from "@services/mail/drivers";
 
-import mjml from 'mjml';
-import { inject_template } from '@services/mail/utils/inject';
+import mjml from "mjml";
+import { inject_template } from "@services/mail/utils/inject";
 
 const { NODE_ENV } = process.env;
 
@@ -11,11 +11,11 @@ export class Mail {
 
   constructor() {
     // Initialize instance of mailer based on enviornment
-    this.mailer = NODE_ENV === 'production' ? new Mailgun() : new Mailgun();
+    this.mailer = NODE_ENV === "production" ? new Mailgun() : new Mailgun();
   }
 
   public async send(
-    mailingList: Array<MailMessage>,
+    mailingList: Array<MailMessage>
   ): Promise<Array<string | Error>> {
     return Promise.all(
       mailingList.map(async (mail: MailMessage) => {
@@ -31,7 +31,7 @@ export class Mail {
         } catch (e) {
           throw e;
         }
-      }),
+      })
     );
   }
 
@@ -40,13 +40,13 @@ export class Mail {
       // Inject the template with the required context variables
       const injected_template: string = await inject_template(
         mail.template,
-        mail.context,
+        mail.context
       );
 
       // Compile MJML into HTML
       const compiled_template = mjml(injected_template, {
         minify: true,
-        beautify: true,
+        beautify: true
       });
 
       if (compiled_template.errors.length > 0) {

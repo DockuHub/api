@@ -1,7 +1,7 @@
-import AWS, { SES } from 'aws-sdk';
-import { PromiseResult } from 'aws-sdk/lib/request';
+import AWS, { SES } from "aws-sdk";
+import { PromiseResult } from "aws-sdk/lib/request";
 
-import { MailDriver, MailMessage } from '@services/mail/types';
+import { MailDriver, MailMessage } from "@services/mail/types";
 
 /**
  * ENV variables
@@ -10,16 +10,16 @@ const {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
   DOCKU_EMAIL_DOMAIN,
-  DOCKU_NO_REPLY_EMAIL_DOMAIN,
+  DOCKU_NO_REPLY_EMAIL_DOMAIN
 } = process.env;
 
 /**
  * Set AWS Credentials
  */
 AWS.config.update({
-  region: 'us-east-1',
+  region: "us-east-1",
   accessKeyId: AWS_ACCESS_KEY_ID!,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY!,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY!
 });
 
 /**
@@ -45,14 +45,14 @@ export class AWSSimpleEmailService implements MailDriver {
      * Configure data
      */
     const payload: SES.SendEmailRequest = {
-      Source: DOCKU_EMAIL_DOMAIN || 'no-reply@docku.com',
-      ReplyToAddresses: [DOCKU_NO_REPLY_EMAIL_DOMAIN || 'no-reply@docku.com'],
+      Source: DOCKU_EMAIL_DOMAIN || "no-reply@docku.com",
+      ReplyToAddresses: [DOCKU_NO_REPLY_EMAIL_DOMAIN || "no-reply@docku.com"],
       Destination: { ToAddresses: [mail.to] },
       Message: {
-        Subject: { Data: mail.subject, Charset: 'UTF-8' },
-        Body: { Html: { Data: mail.html, Charset: 'UTF-8' } },
+        Subject: { Data: mail.subject, Charset: "UTF-8" },
+        Body: { Html: { Data: mail.html, Charset: "UTF-8" } }
       },
-      ConfigurationSetName: 'ConfigSet',
+      ConfigurationSetName: "ConfigSet"
     };
 
     /**

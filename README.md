@@ -46,6 +46,14 @@ const response: Promise<Array<MailMessage | MessageId>> = await mailer.send(mail
 
 Mailing templates are created using **mjml** which is a library to create responsive emails. MJML compiles mjml templates into response html code which makes it much easier to create consistent email templates without the need for tables, mailchimp compiler or any html non-sense. MJML also injects data into the email body.
 
+## 🔗 Module Aliasing
+
+To allow for alising, a script has been created to create any alias you want
+
+```bash
+yarn module:alias <your_alias> <rel_path>
+```
+
 #### TODO
 
 - Travis badge

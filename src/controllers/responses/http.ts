@@ -1,11 +1,11 @@
-import { Response } from 'express';
+import { Response } from "express";
 
 enum HTTPStatusCode {
   success = 200,
   created = 201,
   empty = 204,
   bad = 400,
-  unauthorized = 401,
+  unauthorized = 401
 }
 
 type HTTPPayload = {
@@ -53,7 +53,7 @@ export class HTTP {
   public static bad(res: Response, error_message: string): Response {
     const payload: HTTPPayload = {
       statusCode: HTTPStatusCode.bad,
-      data: { msg: error_message },
+      data: { msg: error_message }
     };
     return res.status(HTTPStatusCode.bad).send(payload);
   }

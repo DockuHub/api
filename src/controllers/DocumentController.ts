@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { HTTP } from './responses/http';
+import { HTTP } from "./responses/http";
 
 export class DocumentController {
   /**

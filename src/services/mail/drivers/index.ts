@@ -1,2 +1,2 @@
-export * from './mailgun';
-export * from './ses';
+export * from "./mailgun";
+export * from "./ses";

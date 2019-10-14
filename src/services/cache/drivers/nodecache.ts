@@ -1,5 +1,5 @@
-import { CacheDriver, Cache as CacheObj } from '@services/cache/types';
-import NodeCache from 'node-cache';
+import { CacheDriver, Cache as CacheObj } from "@services/cache/types";
+import NodeCache from "node-cache";
 
 export class NodeCacheDriver implements CacheDriver {
   private cache: NodeCache.NodeCache;

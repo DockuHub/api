@@ -1,6 +1,6 @@
-import mg from 'mailgun-js';
+import mg from "mailgun-js";
 
-import { MailDriver, MailMessage } from '@services/mail/types';
+import { MailDriver, MailMessage } from "@services/mail/types";
 
 /**
  * ENV variables
@@ -8,7 +8,7 @@ import { MailDriver, MailMessage } from '@services/mail/types';
 const {
   MAILGUN_API_KEY,
   MAILGUN_DOMAIN,
-  DOCKU_NO_REPLY_EMAIL_DOMAIN,
+  DOCKU_NO_REPLY_EMAIL_DOMAIN
 } = process.env;
 
 /**
@@ -16,7 +16,7 @@ const {
  */
 const gun: mg.Mailgun = new mg({
   apiKey: MAILGUN_API_KEY!,
-  domain: MAILGUN_DOMAIN!,
+  domain: MAILGUN_DOMAIN!
 });
 
 export class Mailgun implements MailDriver {
@@ -35,7 +35,7 @@ export class Mailgun implements MailDriver {
       from: `Docku <${DOCKU_NO_REPLY_EMAIL_DOMAIN}>`,
       to: mail.to,
       subject: mail.subject,
-      html: mail.html,
+      html: mail.html
     };
 
     /**
