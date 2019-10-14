@@ -1,5 +1,10 @@
 > Rethinking how you share your work with others
 
+<p>
+  <a href="https://github.com/dockuhub/api"><img src="https://img.shields.io/github/repo-size/dockuhub/api" alt="GitHub Code Size"></a>
+  <a href="https://github.com/dockuhub/api"><img src="https://img.shields.io/github/license/dockuhub/api" alt="GitHub License"></a>
+</p>
+
 ## 🎒 Specifications
 
 - Typescript enviornment
@@ -48,15 +53,13 @@ Mailing templates are created using **mjml** which is a library to create respon
 
 ## 🔗 Module Aliasing
 
-To allow for alising, a script has been created to create any alias you want
+To allow for aliasing, a script has been created to generate the linking for the application. It changes `package.json` & `tsconfig.json`
 
 ```bash
-yarn module:alias <your_alias> <rel_path>
+yarn module:alias
 ```
 
 #### TODO
 
-- Travis badge
+- Travis badge | Build badge
 - Typedoc badge?
-- Repo size badge
-- Licence badge (MIT)
