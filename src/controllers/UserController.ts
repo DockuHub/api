@@ -22,19 +22,18 @@ export class UserController {
     try {
       await UserManager.create(user);
 
+      // TODO Create MagicLink flow
       // Send email
-      const mailMessage: Array<MailMessage> = [
-        {
-          to: user.email,
-          subject: 'Welcome to Docku',
-          template: 'create_user',
-          context: { magiclink: 'https://mangohacks.com' },
-        },
-      ];
+      const mailMessage: MailMessage = {
+        to: user.email,
+        subject: 'Welcome to Docku',
+        template: 'create_user',
+        context: { magiclink: 'https://mangohacks.com' },
+      };
 
       // TODO Add return type to this response
       // Check if response length is > 0. That tells us a messageId was created
-      const response = await Mail.send(mailMessage);
+      const response = await Mail.send([mailMessage]);
       winston.info({
         message: `Account created for: ${user.email}`,
         emailId: response,
