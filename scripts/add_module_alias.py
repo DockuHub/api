@@ -10,7 +10,7 @@ def update_package_json(alias, path):
   """
   try:
     dirname = os.path.abspath(os.path.dirname(__file__))
-    file_path  = os.path.join(dirname, "../../package.json")
+    file_path  = os.path.join(dirname, "../package.json")
 
     with open(file_path, "r") as f:
       pkg = json.loads(f.read())
@@ -35,7 +35,7 @@ def update_ts_config(alias, path):
   """
   try:
     dirname = os.path.abspath(os.path.dirname(__file__))
-    file_path  = os.path.join(dirname, "../../tsconfig.json")
+    file_path  = os.path.join(dirname, "../tsconfig.json")
     
     with open(file_path, "r") as f:
       config = json.loads(f.read())

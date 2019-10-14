@@ -13,7 +13,7 @@
     "build": "npx tsc",
     "test": "NODE_ENV=test mocha -r ts-node/register src/**/*.test.ts",
     "prettier": "prettier --write '**/*.{ts,js,css,html}'",
-    "module:alias": "python3 ./src/scripts/add_module_alias.py"
+    "module:alias": "python3 ./scripts/add_module_alias.py"
   },
   "dependencies": {
     "app-root-path": "^2.2.1",
