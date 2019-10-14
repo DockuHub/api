@@ -1,9 +1,11 @@
 import os
+import sys
 import json
 
-def update_package_json(alias):
+def update_package_json(alias, path):
   """ Update package.json
-  :param str alis: Path alias
+  :param str alias: Alias name
+  :param str path: Path to alias
   :return:
   """
   try:
@@ -15,7 +17,7 @@ def update_package_json(alias):
       aliases = pkg.get("_moduleAliases")
 
       if not aliases.get(f"@{alias}"):
-        aliases[f"@{alias}"] = f"src/{alias}"
+        aliases[f"@{alias}"] = f"{path}"
         pkg["_moduleAliases"] = aliases
         
         with open(file_path, "w") as f:
@@ -25,9 +27,10 @@ def update_package_json(alias):
   except ValueError as e:
     print("ValueError - ", e)
 
-def update_ts_config(alias):
+def update_ts_config(alias, path):
   """ Update tsconfig.json
-  :param str alis: Path alias
+  :param str alias: Alias name
+  :param str path: Path to alias
   :return:
   """
   try:
@@ -39,7 +42,11 @@ def update_ts_config(alias):
       paths = config["compilerOptions"]["paths"]
 
       if not paths.get(f"@{alias}/*"):
-        paths[f"@{alias}/*"] = [f"{alias}/*"]
+        # TODO Remove src/ from path
+        if "src" in path:
+          path = path.split("src/")[1]
+
+        paths[f"@{alias}/*"] = [f"{path}/*"]
         config["compilerOptions"]["paths"]= paths
         
         with open(file_path, "w") as f:
@@ -51,10 +58,22 @@ def update_ts_config(alias):
 
 
 if __name__ == "__main__":
-  # TODO Get user params
-  alias = "ye"
-  path = "src/ye"
-  update_package_json(alias)
-  update_ts_config(alias)
+  alias = input("Alias - ex: controllers\n> ")
+  path = input("Path - ex: src/controllers\n> ")
+
+  if not alias:
+    print("> Alias not provided")
+    exit(1)
+
+  if not path:
+    print("> Path not provided")
+    exit(1)
+
+  if "src" not in path:
+    print("> Path must start with src/<path_to_alias>")
+    exit(1)
+
+  update_package_json(alias, path)
+  update_ts_config(alias, path)
 
   
