@@ -10,9 +10,7 @@ export class Mail {
   public mailer: MailDriver;
 
   constructor() {
-    /**
-     * Initialize instance of mailer based on enviornment
-     */
+    // Initialize instance of mailer based on enviornment
     this.mailer = NODE_ENV === 'production' ? new Mailgun() : new Mailgun();
   }
 
@@ -38,8 +36,8 @@ export class Mail {
   }
 
   private async inject(mail: MailMessage): Promise<MailMessage | Error> {
-    // Inject the template with the required context variables
     try {
+      // Inject the template with the required context variables
       const injected_template: string = await inject_template(
         mail.template,
         mail.context,

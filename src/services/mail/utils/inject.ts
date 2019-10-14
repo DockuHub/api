@@ -1,6 +1,8 @@
 import { promises as fs } from 'fs';
 import appRoot from 'app-root-path';
 
+import { Cache } from '../../../server';
+
 export async function inject_template(
   template_name: string,
   args: object | any,
