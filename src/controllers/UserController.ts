@@ -41,7 +41,7 @@ export class UserController {
 
       return HTTP.created(res);
     } catch (e) {
-      winston.info(e.message);
+      winston.error(e.message);
       return HTTP.bad(res, e.message);
     }
   }
