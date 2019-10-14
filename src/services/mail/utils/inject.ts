@@ -7,7 +7,7 @@ export async function inject_template(
 ): Promise<string> {
   try {
     // TODO Cache template
-    const template_path: string = `${appRoot}/src/services/mail/templates/${template_name}`;
+    const template_path: string = `${appRoot}/src/services/mail/templates/${template_name}.html`;
     const template: string = await fs.readFile(template_path, {
       encoding: 'utf8',
       flag: 'r',

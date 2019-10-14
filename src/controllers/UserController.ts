@@ -17,7 +17,6 @@ export class UserController {
    * @param res
    */
   public static async create(req: Request, res: Response): Promise<Response> {
-    // TODO Welcome email template with magic link included to signin?
     const user: UserType = { ...req.body };
 
     try {
@@ -28,8 +27,8 @@ export class UserController {
         {
           to: user.email,
           subject: 'Welcome to Docku',
-          template: 'create_user.html',
-          context: { magiclink: 'https://google.com' },
+          template: 'create_user',
+          context: { magiclink: 'https://mangohacks.com' },
         },
       ];
 
