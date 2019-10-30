@@ -12,13 +12,13 @@ export class User extends BaseModel {
     type: "varchar",
     length: 15
   })
-  firstName!: string;
+  first_name!: string;
 
   @Column({
     type: "varchar",
     length: 20
   })
-  lastName!: string;
+  last_name!: string;
 
   @Column({
     nullable: false,
