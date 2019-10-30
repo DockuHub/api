@@ -34,7 +34,7 @@ export class UserController {
         const logInMailMessage: MailMessage = {
           to: email,
           subject: "Here's your verification",
-          template: 'create_user',
+          template: 'magiclink_user',
           context: { magiclink: 'https://mangohacks.com' },
         };
 
