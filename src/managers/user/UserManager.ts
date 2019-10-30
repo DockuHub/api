@@ -1,9 +1,9 @@
-import { User } from "@models/User";
-import { Repository, getRepository, ObjectType } from "typeorm";
+import { User } from '@models/User';
+import { Repository, getRepository, ObjectType } from 'typeorm';
 
-import { UserType } from "@managers/User/types";
+import { UserType } from '@managers/User/types';
 
-import { inject_template } from "@services/mail/utils/inject";
+import { inject_template } from '@services/mail/utils/inject';
 
 export class UserManager {
   /**
@@ -25,17 +25,10 @@ export class UserManager {
    * Find user by username
    *
    */
-  public static async findByUsername(
-    username: string
-  ): Promise<User | Error | undefined> {
+  public static async findByEmail(email: string): Promise<User | undefined> {
     // TODO limit how much info gets returned
     const repo: Repository<User> = getRepository(User);
-    const user = await repo.findOne({ where: { username } });
-
-    // Validate user was found
-    if (!user || user === undefined) {
-      throw new Error(`${username} not found`);
-    }
+    const user = await repo.findOne({ where: { email } });
 
     return user;
   }
