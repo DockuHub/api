@@ -1,14 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 
-import { HTTP } from "./responses/http";
+import { HTTP } from './responses/http';
 
-import { UserManager } from "@managers/User/UserManager";
-import { UserType } from "@managers/User/types";
+import { UserManager } from '@managers/User/UserManager';
+import { UserType } from '@managers/User/types';
 
-import { Mail } from "../server";
-import { MailMessage } from "@services/mail/types";
+import { Mail } from '../server';
+import { MailMessage } from '@services/mail/types';
 
-import { logger as winston } from "@config/winston";
+import { logger as winston } from '@config/winston';
 
 export class UserController {
   /**
@@ -18,6 +19,11 @@ export class UserController {
    */
   public static async create(req: Request, res: Response): Promise<Response> {
     const user: UserType = { ...req.body };
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return HTTP.bad(res, errors.array().toString());
+    }
 
     try {
       await UserManager.create(user);
@@ -26,9 +32,9 @@ export class UserController {
       // Send email
       const mailMessage: MailMessage = {
         to: user.email,
-        subject: "Welcome to Docku",
-        template: "create_user",
-        context: { magiclink: "https://mangohacks.com" }
+        subject: 'Welcome to Docku',
+        template: 'create_user',
+        context: { magiclink: 'https://mangohacks.com' },
       };
 
       // TODO Add return type to this response
@@ -36,7 +42,7 @@ export class UserController {
       const response = await Mail.send([mailMessage]);
       winston.info({
         message: `Account created for: ${user.email}`,
-        emailId: response
+        emailId: response,
       });
 
       return HTTP.created(res);
@@ -53,7 +59,7 @@ export class UserController {
    */
   public static async getByUsername(
     req: Request,
-    res: Response
+    res: Response,
   ): Promise<Response> {
     // TODO sanitize this request/validate username
     const { username } = req.params;
