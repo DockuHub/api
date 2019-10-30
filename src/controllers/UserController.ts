@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import * as JWT from 'jsonwebtoken';
 
 import { HTTP } from './responses/http';
 
@@ -25,23 +26,41 @@ export class UserController {
       return HTTP.bad(res, errors.array().toString());
     }
 
-    try {
-      await UserManager.create(user);
+    const { email } = req.body;
 
-      // TODO Create MagicLink flow
-      // Send email
-      const mailMessage: MailMessage = {
-        to: user.email,
+    try {
+      const user = !!UserManager.findByEmail(email);
+      if (!!user) {
+        const logInMailMessage: MailMessage = {
+          to: email,
+          subject: "Here's your verification",
+          template: 'create_user',
+          context: { magiclink: 'https://mangohacks.com' },
+        };
+
+        const response = await Mail.send([logInMailMessage]);
+
+        winston.info({
+          message: `Sending magic link for: ${email}`,
+          emailId: response,
+        });
+
+        return HTTP.success(res);
+      }
+
+      await UserManager.create(email);
+
+      const createMailMessage: MailMessage = {
+        to: email,
         subject: 'Welcome to Docku',
         template: 'create_user',
         context: { magiclink: 'https://mangohacks.com' },
       };
 
-      // TODO Add return type to this response
-      // Check if response length is > 0. That tells us a messageId was created
-      const response = await Mail.send([mailMessage]);
+      const response = await Mail.send([createMailMessage]);
+
       winston.info({
-        message: `Account created for: ${user.email}`,
+        message: `Account created for: ${email}`,
         emailId: response,
       });
 
@@ -65,7 +84,7 @@ export class UserController {
     const { username } = req.params;
 
     try {
-      const user = await UserManager.findByUsername(username);
+      const user = await UserManager.findByEmail(username);
       return HTTP.success(res, user);
     } catch (e) {
       return HTTP.bad(res, e.message);
